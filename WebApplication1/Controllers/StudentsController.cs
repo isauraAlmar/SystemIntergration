@@ -10,110 +10,121 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using WebApplication1.Models;
+using WebApplication1.Repo;
 
 namespace WebApplication1.Controllers
 {
     public class StudentsController : ApiController
     {
-        private WebApplication1Context db = new WebApplication1Context();
+        private IRepoStudent db = new RepoStudent();
 
         // GET: api/Students
-        public IQueryable<Student> GetStudents()
+        public List<Student> GetStudents()
         {
-            return db.Students;
+            return db.getStudents();
         }
 
-        // GET: api/Student/5
-        [ResponseType(typeof(Student))]
-        public async Task<IHttpActionResult> GetStudent(int id)
-        {
-            Student student = await db.Students.FindAsync(id);
-            if (student == null)
-            {
-                return NotFound();
-            }
 
-            return Ok(student);
-        }
+        // I have commented this out for some reason it needs to be modifyed a little bit. 
 
-        // PUT: api/Students/5
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutStudent(int id, Student student)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        // i recommand you getting postman extension from google chrome. hassan or someone might be able to tell you more about it.
 
-            if (id != student.id)
-            {
-                return BadRequest();
-            }
+        // http://localhost:53119/api/Students you should be able to test it out with that link. you will post that in post man or just in your google chrome if it is working 
+        // it should return two students in XML format then you came try and implament maybe get by id
 
-            db.Entry(student).State = EntityState.Modified;
 
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StudentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return StatusCode(HttpStatusCode.NoContent);
-        }
+        //// GET: api/Student/5
+        //[ResponseType(typeof(Student))]
+        //public async Task<IHttpActionResult> GetStudent(int id)
+        //{
+        //    Student student = await db.Students.FindAsync(id);
+        //    if (student == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-        // POST: api/Students
-        [ResponseType(typeof(Student))]
-        public async Task<IHttpActionResult> PostStudent(Student student)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //    return Ok(student);
+        //}
 
-            db.Students.Add(student);
-            await db.SaveChangesAsync();
+        //// PUT: api/Students/5
+        //[ResponseType(typeof(void))]
+        //public async Task<IHttpActionResult> PutStudent(int id, Student student)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            return CreatedAtRoute("DefaultApi", new { id = student.id }, student);
-        }
+        //    if (id != student.id)
+        //    {
+        //        return BadRequest();
+        //    }
 
-        // DELETE: api/Students/5
-        [ResponseType(typeof(Student))]
-        public async Task<IHttpActionResult> DeleteStudent(int id)
-        {
-            Student student = await db.Students.FindAsync(id);
-            if (student == null)
-            {
-                return NotFound();
-            }
+        //    db.Entry(student).State = EntityState.Modified;
 
-            db.Students.Remove(student);
-            await db.SaveChangesAsync();
+        //    try
+        //    {
+        //        await db.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!StudentExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return Ok(student);
-        }
+        //    return StatusCode(HttpStatusCode.NoContent);
+        //}
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //// POST: api/Students
+        //[ResponseType(typeof(Student))]
+        //public async Task<IHttpActionResult> PostStudent(Student student)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-        private bool StudentExists(int id)
-        {
-            return db.Students.Count(e => e.id == id) > 0;
-        }
+        //    db.Students.Add(student);
+        //    await db.SaveChangesAsync();
+
+        //    return CreatedAtRoute("DefaultApi", new { id = student.id }, student);
+        //}
+
+        //// DELETE: api/Students/5
+        //[ResponseType(typeof(Student))]
+        //public async Task<IHttpActionResult> DeleteStudent(int id)
+        //{
+        //    Student student = await db.Students.FindAsync(id);
+        //    if (student == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    db.Students.Remove(student);
+        //    await db.SaveChangesAsync();
+
+        //    return Ok(student);
+        //}
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
+
+        //private bool StudentExists(int id)
+        //{
+        //    return db.Students.Count(e => e.id == id) > 0;
+        //}
     }
 }

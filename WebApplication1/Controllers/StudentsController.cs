@@ -23,7 +23,7 @@ namespace WebApplication1.Controllers
             return db.Students;
         }
 
-        // GET: api/Students/5
+        // GET: api/Student/5
         [ResponseType(typeof(Student))]
         public async Task<IHttpActionResult> GetStudent(int id)
         {

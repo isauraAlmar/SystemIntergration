@@ -21,9 +21,9 @@ namespace WebApplication1.Repo
             return studentsList;
         }
 
-        public Student getStudentById(int id)
+        public  Student getStudentById(int id)
         {
-            Student student = studentsList.Where(x => x.id == id).First();
+            Student student =  studentsList.Where(x => x.id == id).First();
 
             return student;
         }
